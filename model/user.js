@@ -1,13 +1,10 @@
 const mongoose = require('mongoose')
-const Joigoose = require('joigoose')(mongoose, null, { timestamps: true })
+const Joigoose = require('joigoose')(mongoose)
 const { Joi } = require('koa-joi-router')
 
 const joiSchema = {
   nickname: Joi.string()
     .description('用户昵称'),
-
-  username: Joi.string()
-    .description('用户名'),
 
   mobile: Joi.string().trim()
     .allow('')
@@ -30,6 +27,8 @@ const joiSchema = {
 
   passport: Joi.string()
     .description('用户密码')
+    .min(8)
+    .max(32)
     .meta({
       select: false,
     }),
@@ -46,7 +45,7 @@ const joi = Joi.object(joiSchema)
     allowUnknown: true,
   })
 
-const schema = new mongoose.Schema(Joigoose.convert(joi))
+const schema = new mongoose.Schema(Joigoose.convert(joi), { timestamps: true })
 
 module.exports = mongoose.model('User', schema)
 module.exports.joiSchema = joiSchema

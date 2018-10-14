@@ -1,0 +1,11 @@
+##
+# 开发环境配置文件
+##
+
+# 指定运行端口
+port: 3602
+
+mongo:
+  uri: http://localhost:27017/o775fresh-stage
+  options:
+    useNewUrlParser: true
